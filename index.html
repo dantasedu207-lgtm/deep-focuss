@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Focus System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080808;
+    --surface: #0f0f0f;
+    --surface2: #161616;
+    --surface3: #1e1e1e;
+    --border: rgba(255,255,255,0.07);
+    --border-strong: rgba(255,255,255,0.13);
+    --text: #f0ede8;
+    --text-muted: rgba(240,237,232,0.45);
+    --text-dim: rgba(240,237,232,0.25);
+    --accent: #c8ff00;
+    --accent-dim: rgba(200,255,0,0.12);
+    --accent-border: rgba(200,255,0,0.3);
+    --red: #ff3b3b;
+    --red-dim: rgba(255,59,59,0.1);
+    --font-sans: 'Space Grotesk', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .nav-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    border: 1px solid var(--border-strong);
+    padding: 4px 12px;
+    border-radius: 2px;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 1.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(200,255,0,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-eyebrow::before,
+  .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.75rem;
+    max-width: 900px;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--text-dim);
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--text-muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 3.5rem;
+  }
+
+  /* WAITLIST FORM */
+  .waitlist-form {
+    display: flex;
+    gap: 0;
+    max-width: 480px;
+    width: 100%;
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--surface);
+    transition: border-color 0.2s;
+  }
+
+  .waitlist-form:focus-within {
+    border-color: var(--accent-border);
+  }
+
+  .waitlist-form input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 1rem 1.25rem;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .waitlist-form input::placeholder { color: var(--text-dim); }
+
+  .waitlist-form button {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    padding: 1rem 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+
+  .waitlist-form button:hover { opacity: 0.85; }
+  .waitlist-form button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .form-note {
+    margin-top: 1rem;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+  }
+
+  /* AI DIAGNOSIS RESULT */
+  .diagnosis-box {
+    display: none;
+    max-width: 560px;
+    width: 100%;
+    margin-top: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .diagnosis-box.visible { display: block; }
+
+  .diagnosis-header {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .diagnosis-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .diagnosis-status {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .diagnosis-content {
+    padding: 1.5rem 1.25rem;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-muted);
+    min-height: 80px;
+  }
+
+  .diagnosis-content strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .cursor-blink {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--accent);
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* STATS STRIP */
+  .stats {
+    padding: 4rem 2.5rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-family: var(--font-mono);
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 0.4rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* MANIFESTO */
+  .manifesto {
+    max-width: 680px;
+    margin: 6rem auto;
+    padding: 0 2rem;
+  }
+
+  .section-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+  }
+
+  .manifesto-line {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .manifesto-line:last-child { border-bottom: none; }
+
+  .manifesto-line strong {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .manifesto-line .strike {
+    text-decoration: line-through;
+    color: var(--text-dim);
+  }
+
+  /* PILLARS */
+  .pillars {
+    padding: 5rem 2.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .pillar {
+    background: var(--surface);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .pillar:hover { background: var(--surface2); }
+
+  .pillar-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.25rem;
+  }
+
+  .pillar h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .pillar p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  .pillar-accent {
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .pillar:hover .pillar-accent { opacity: 1; }
+
+  /* SOCIAL PROOF */
+  .proof {
+    padding: 5rem 2.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .quote {
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--text-muted);
+    font-style: italic;
+    position: relative;
+    padding: 2rem 2rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--surface);
+    margin-bottom: 1.5rem;
+  }
+
+  .quote strong { color: var(--text); font-style: normal; }
+
+  .quote-author {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+  }
+
+  /* FINAL CTA */
+  .final-cta {
+    padding: 7rem 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(200,255,0,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .final-cta h2 {
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .final-cta p {
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    font-size: 1rem;
+  }
+
+  .waitlist-form-bottom {
+    display: flex;
+    gap: 0;
+    max-width: 440px;
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--surface);
+    transition: border-color 0.2s;
+  }
+
+  .waitlist-form-bottom:focus-within {
+    border-color: var(--accent-border);
+  }
+
+  .waitlist-form-bottom input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 1rem 1.25rem;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .waitlist-form-bottom input::placeholder { color: var(--text-dim); }
+
+  .waitlist-form-bottom button {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    padding: 1rem 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+
+  .waitlist-form-bottom button:hover { opacity: 0.85; }
+  .waitlist-form-bottom button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .diagnosis-box-bottom {
+    display: none;
+    max-width: 560px;
+    width: 100%;
+    margin: 2rem auto 0;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    overflow: hidden;
+    text-align: left;
+  }
+
+  .diagnosis-box-bottom.visible { display: block; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 2.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer .logo {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  footer p {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+  }
+
+  /* UTILITIES */
+  .center { display: flex; flex-direction: column; align-items: center; }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.25rem; }
+    .waitlist-form, .waitlist-form-bottom { flex-direction: column; }
+    .waitlist-form button, .waitlist-form-bottom button { width: 100%; padding: 0.9rem; }
+    footer { flex-direction: column; text-align: center; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">DFS</span>
+  <span class="nav-badge">WAITLIST ABERTA</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero center">
+  <div class="hero-eyebrow">Sistema de Performance</div>
+
+  <h1>
+    Ou você controla<br>
+    sua mente, ou ela<br>
+    <em>controla você.</em>
+  </h1>
+
+  <p class="hero-sub">
+    Deep Focus System é o framework de disciplina e execução para quem está cansado de planejamento sem resultado.
+  </p>
+
+  <div class="waitlist-form" id="form-hero">
+    <input type="email" id="email-hero" placeholder="seu@email.com" />
+    <button id="btn-hero" onclick="submitWaitlist('hero')">Entrar na lista</button>
+  </div>
+  <p class="form-note">Ao entrar, você recebe seu diagnóstico de performance gerado por IA.</p>
+
+  <div class="diagnosis-box" id="diag-hero">
+    <div class="diagnosis-header">
+      <span class="diagnosis-label">DIAGNÓSTICO IA</span>
+      <span class="diagnosis-status" id="status-hero">Gerando...</span>
+    </div>
+    <div class="diagnosis-content" id="content-hero"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats reveal">
+  <div>
+    <div class="stat-num">87%</div>
+    <div class="stat-label">das metas falham por falta de sistema</div>
+  </div>
+  <div>
+    <div class="stat-num">3min</div>
+    <div class="stat-label">é o tempo médio de foco real por hora</div>
+  </div>
+  <div>
+    <div class="stat-num">0</div>
+    <div class="stat-label">motivação necessária quando há protocolo</div>
+  </div>
+</div>
+
+<!-- MANIFESTO -->
+<section class="manifesto reveal">
+  <p class="section-tag">// manifesto</p>
+
+  <div class="manifesto-line">
+    <span class="strike">Motivação</span> é volátil. <strong>Sistema é permanente.</strong>
+  </div>
+  <div class="manifesto-line">
+    Você não precisa de mais conteúdo. Você precisa de <strong>menos distração</strong> e mais execução.
+  </div>
+  <div class="manifesto-line">
+    O problema nunca foi preguiça. Foi a <strong>ausência de estrutura.</strong>
+  </div>
+  <div class="manifesto-line">
+    <strong>Deep Focus</strong> não é um estado mental. É um protocolo repetível.
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="pillars reveal">
+  <p class="section-tag" style="padding: 0 0 2rem;">// pilares do sistema</p>
+  <div class="pillars-grid">
+    <div class="pillar">
+      <div class="pillar-accent"></div>
+      <div class="pillar-num">01</div>
+      <h3>Clareza Brutal</h3>
+      <p>Saber exatamente o que importa hoje. Sem lista de 30 tarefas. Uma prioridade, executada.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-accent"></div>
+      <div class="pillar-num">02</div>
+      <h3>Proteção de Atenção</h3>
+      <p>Seu ambiente trabalha contra você. Protocolo de bloqueio de estímulos para contexto profundo real.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-accent"></div>
+      <div class="pillar-num">03</div>
+      <h3>Consistência Sistemática</h3>
+      <p>Performance não vem de picos. Vem de repetição disciplinada mesmo quando não há energia.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-accent"></div>
+      <div class="pillar-num">04</div>
+      <h3>Feedback Loop Rápido</h3>
+      <p>Revisão diária de 5 minutos. O que funcionou, o que travou, o que ajusta amanhã.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="proof reveal">
+  <p class="section-tag" style="text-align:left; margin-bottom: 2rem;">// o que muda</p>
+  <div class="quote">
+    "Fui de <strong>0 a 90 minutos de foco real por dia</strong> em três semanas. Não mudei minha motivação. Mudei minha estrutura."
+  </div>
+  <p class="quote-author">— Beta tester #007, fundador de startup</p>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta center">
+  <h2>Chega de começar<br>na segunda.</h2>
+  <p>Entre na waitlist e receba seu diagnóstico de performance agora.</p>
+
+  <div class="waitlist-form-bottom" id="form-bottom">
+    <input type="email" id="email-bottom" placeholder="seu@email.com" />
+    <button id="btn-bottom" onclick="submitWaitlist('bottom')">Garantir vaga</button>
+  </div>
+
+  <div class="diagnosis-box-bottom diagnosis-box" id="diag-bottom">
+    <div class="diagnosis-header">
+      <span class="diagnosis-label">DIAGNÓSTICO IA</span>
+      <span class="diagnosis-status" id="status-bottom">Gerando...</span>
+    </div>
+    <div class="diagnosis-content" id="content-bottom"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="logo">Deep Focus System</span>
+  <p>© 2025 · Todos os direitos reservados</p>
+</footer>
+
+<script>
+async function submitWaitlist(id) {
+  const emailEl = document.getElementById('email-' + id);
+  const btn = document.getElementById('btn-' + id);
+  const diagBox = document.getElementById('diag-' + id);
+  const statusEl = document.getElementById('status-' + id);
+  const contentEl = document.getElementById('content-' + id);
+  const email = emailEl.value.trim();
+
+  if (!email || !email.includes('@')) {
+    emailEl.style.color = '#ff3b3b';
+    emailEl.placeholder = 'insira um email válido';
+    setTimeout(() => { emailEl.style.color = ''; emailEl.placeholder = 'seu@email.com'; }, 2000);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '...';
+
+  diagBox.classList.add('visible');
+  statusEl.textContent = 'Gerando...';
+  contentEl.innerHTML = '<span class="cursor-blink"></span>';
+
+  const prompt = `Você é o Deep Focus System, um assistente de performance e disciplina. 
+Um novo usuário entrou na waitlist com o email ${email.split('@')[0].replace(/[^a-zA-Z]/g, '') || 'focado'}.
+
+Gere um diagnóstico de performance curtíssimo e impactante em português. 
+Formato: 3 linhas diretas. Sem título, sem emoji, sem lista.
+Linha 1: uma verdade dura sobre o maior inimigo da performance (foco, disciplina ou execução).
+Linha 2: o que o sistema vai resolver especificamente.
+Linha 3: uma instrução de ação para AGORA.
+Tom: direto, seco, sem motivação barata. Máximo 60 palavras.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await res.json();
+    const text = data.content?.[0]?.text || 'Sistema ativado. Prepare-se.';
+
+    contentEl.innerHTML = '';
+    statusEl.textContent = 'Completo';
+
+    await typewriter(contentEl, text);
+
+    btn.textContent = 'Na lista ✓';
+    btn.style.background = 'rgba(200,255,0,0.15)';
+    btn.style.color = 'var(--accent)';
+
+  } catch (e) {
+    contentEl.innerHTML = '<strong>Sistema ativado.</strong> Sua vaga está garantida. Aguarde o acesso.';
+    statusEl.textContent = 'Completo';
+    btn.textContent = 'Na lista ✓';
+  }
+}
+
+async function typewriter(el, text) {
+  const lines = text.split('\n').filter(l => l.trim());
+  for (let i = 0; i < lines.length; i++) {
+    const p = document.createElement('p');
+    p.style.marginBottom = i < lines.length - 1 ? '0.75rem' : '0';
+    el.appendChild(p);
+    for (const char of lines[i]) {
+      p.innerHTML = p.innerHTML.replace('<span class="cursor-blink"></span>', '') + char + '<span class="cursor-blink"></span>';
+      await sleep(18);
+    }
+    p.innerHTML = p.innerHTML.replace('<span class="cursor-blink"></span>', '');
+  }
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

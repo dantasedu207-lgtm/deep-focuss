@@ -545,13 +545,25 @@
   /* UTILITIES */
   .center { display: flex; flex-direction: column; align-items: center; }
 
-  @media (max-width: 600px) {
-    nav { padding: 1rem 1.25rem; }
-    .waitlist-form, .waitlist-form-bottom { flex-direction: column; }
-    .waitlist-form button, .waitlist-form-bottom button { width: 100%; padding: 0.9rem; }
-    footer { flex-direction: column; text-align: center; }
-    .stats { gap: 1.5rem; }
-  }
+  .cta-button{
+  display:block;
+  width:100%;
+  text-align:center;
+  background:var(--accent);
+  color:var(--black);
+  text-decoration:none;
+  padding:1rem 1.5rem;
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  transition:all .2s ease;
+}
+
+.cta-button:hover{
+  opacity:.85;
+}
 
   /* SCROLL ANIMATIONS */
   .reveal {
@@ -588,11 +600,19 @@
     Deep Focus System é o framework de disciplina e execução para quem está cansado de planejamento sem resultado.
   </p>
 
-  <div class="waitlist-form" id="form-hero">
-    <input type="email" id="email-hero" placeholder="seu@email.com" />
-    <button id="btn-hero" onclick="submitWaitlist('hero')">Entrar na lista</button>
-  </div>
-  <p class="form-note">Ao entrar, você recebe seu diagnóstico de performance gerado por IA.</p>
+  <div class="waitlist-form">
+  <a
+    href="https://forms.gle/w4MzNA4ANPfkAYkC6"
+    target="_blank"
+    class="cta-button"
+  >
+    GARANTIR ACESSO ANTECIPADO
+  </a>
+</div>
+
+<p class="form-note">
+  Acesso antecipado para os primeiros membros da Deep Focus.
+</p>
 
   <div class="diagnosis-box" id="diag-hero">
     <div class="diagnosis-header">

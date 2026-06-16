@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deep Focus System</title>
+<title>Deep Focus System — Disciplina para Treino</title>
+<meta name="description" content="Para quem treina todo dia mas ainda não vê resultado consistente. O problema não é o treino. É a falta de constância sistemática.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -15,17 +16,13 @@
     --black: #080808;
     --surface: #0f0f0f;
     --surface2: #161616;
-    --surface3: #1e1e1e;
     --border: rgba(255,255,255,0.07);
     --border-strong: rgba(255,255,255,0.13);
     --text: #f0ede8;
     --text-muted: rgba(240,237,232,0.45);
     --text-dim: rgba(240,237,232,0.25);
     --accent: #c8ff00;
-    --accent-dim: rgba(200,255,0,0.12);
     --accent-border: rgba(200,255,0,0.3);
-    --red: #ff3b3b;
-    --red-dim: rgba(255,59,59,0.1);
     --font-sans: 'Space Grotesk', sans-serif;
     --font-mono: 'Space Mono', monospace;
   }
@@ -51,10 +48,9 @@
     justify-content: space-between;
     padding: 1.25rem 2.5rem;
     border-bottom: 1px solid var(--border);
-    background: rgba(8,8,8,0.85);
+    background: rgba(8,8,8,0.9);
     backdrop-filter: blur(12px);
   }
-
   .nav-logo {
     font-family: var(--font-mono);
     font-size: 13px;
@@ -63,7 +59,6 @@
     text-transform: uppercase;
     color: var(--accent);
   }
-
   .nav-badge {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -86,19 +81,17 @@
     position: relative;
     overflow: hidden;
   }
-
   .hero::before {
     content: '';
     position: absolute;
-    top: 20%;
+    top: 15%;
     left: 50%;
     transform: translateX(-50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(200,255,0,0.04) 0%, transparent 70%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(200,255,0,0.045) 0%, transparent 65%);
     pointer-events: none;
   }
-
   .hero-eyebrow {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -110,7 +103,6 @@
     align-items: center;
     gap: 10px;
   }
-
   .hero-eyebrow::before,
   .hero-eyebrow::after {
     content: '';
@@ -118,36 +110,92 @@
     width: 32px;
     height: 1px;
     background: var(--accent);
-    opacity: 0.5;
+    opacity: 0.4;
   }
 
   h1 {
-    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-size: clamp(2.8rem, 7.5vw, 6rem);
     font-weight: 700;
     line-height: 0.95;
     letter-spacing: -0.03em;
     margin-bottom: 1.75rem;
-    max-width: 900px;
+    max-width: 860px;
   }
-
   h1 em {
     font-style: normal;
     color: var(--text-dim);
   }
+  h1 .acc { color: var(--accent); }
 
   .hero-sub {
-    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
     color: var(--text-muted);
-    max-width: 520px;
-    line-height: 1.7;
-    margin-bottom: 3.5rem;
+    max-width: 500px;
+    line-height: 1.75;
+    margin-bottom: 3rem;
   }
 
-  /* WAITLIST FORM */
-  .waitlist-form {
-    display: flex;
-    gap: 0;
+  /* PRIMARY CTA BUTTON */
+  .btn-primary {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--black);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1.1rem 2.5rem;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    margin-bottom: 1rem;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    margin-left: 0.75rem;
+  }
+  .btn-secondary:hover { border-color: var(--accent-border); color: var(--text); }
+
+  .cta-group { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; align-items: center; }
+
+  .form-note {
+    margin-top: 1.25rem;
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    letter-spacing: 0.06em;
+  }
+
+  /* AI DIAGNOSIS (email form) */
+  .email-gate {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
     max-width: 480px;
+    margin-top: 0.5rem;
+  }
+  .email-gate.open { display: flex; }
+
+  .email-row {
+    display: flex;
     width: 100%;
     border: 1px solid var(--border-strong);
     border-radius: 3px;
@@ -155,31 +203,25 @@
     background: var(--surface);
     transition: border-color 0.2s;
   }
-
-  .waitlist-form:focus-within {
-    border-color: var(--accent-border);
-  }
-
-  .waitlist-form input {
+  .email-row:focus-within { border-color: var(--accent-border); }
+  .email-row input {
     flex: 1;
     background: transparent;
     border: none;
     outline: none;
-    padding: 1rem 1.25rem;
+    padding: 0.9rem 1.2rem;
     font-family: var(--font-sans);
     font-size: 14px;
     color: var(--text);
   }
-
-  .waitlist-form input::placeholder { color: var(--text-dim); }
-
-  .waitlist-form button {
+  .email-row input::placeholder { color: var(--text-dim); }
+  .email-row button {
     background: var(--accent);
     color: var(--black);
     border: none;
-    padding: 1rem 1.5rem;
+    padding: 0.9rem 1.4rem;
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -187,40 +229,28 @@
     white-space: nowrap;
     transition: opacity 0.2s;
   }
+  .email-row button:hover { opacity: 0.85; }
+  .email-row button:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  .waitlist-form button:hover { opacity: 0.85; }
-  .waitlist-form button:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  .form-note {
-    margin-top: 1rem;
-    font-size: 12px;
-    color: var(--text-dim);
-    font-family: var(--font-mono);
-    letter-spacing: 0.05em;
-  }
-
-  /* AI DIAGNOSIS RESULT */
+  /* DIAGNOSIS BOX */
   .diagnosis-box {
     display: none;
-    max-width: 560px;
     width: 100%;
-    margin-top: 2rem;
+    max-width: 520px;
+    margin-top: 1.5rem;
     background: var(--surface);
     border: 1px solid var(--border-strong);
     border-radius: 3px;
     overflow: hidden;
   }
-
   .diagnosis-box.visible { display: block; }
-
   .diagnosis-header {
-    padding: 0.75rem 1.25rem;
+    padding: 0.7rem 1.2rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-
   .diagnosis-label {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -228,51 +258,59 @@
     text-transform: uppercase;
     color: var(--accent);
   }
-
   .diagnosis-status {
     font-family: var(--font-mono);
     font-size: 11px;
     color: var(--text-dim);
   }
-
   .diagnosis-content {
-    padding: 1.5rem 1.25rem;
+    padding: 1.4rem 1.2rem;
     font-size: 14px;
-    line-height: 1.75;
+    line-height: 1.8;
     color: var(--text-muted);
     min-height: 80px;
   }
-
-  .diagnosis-content strong {
-    color: var(--text);
-    font-weight: 600;
-  }
+  .diagnosis-content strong { color: var(--text); font-weight: 600; }
 
   .cursor-blink {
     display: inline-block;
-    width: 8px;
-    height: 14px;
+    width: 8px; height: 14px;
     background: var(--accent);
     vertical-align: middle;
     animation: blink 1s step-end infinite;
     margin-left: 2px;
   }
-
   @keyframes blink { 50% { opacity: 0; } }
 
-  /* STATS STRIP */
+  /* VERDADE CRUA */
+  .truth-strip {
+    padding: 3.5rem 2rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    background: var(--surface);
+  }
+  .truth-strip p {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 500;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .truth-strip strong { color: var(--text); }
+
+  /* STATS */
   .stats {
     padding: 4rem 2.5rem;
-    border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 2rem;
-    max-width: 1000px;
+    max-width: 960px;
     margin: 0 auto;
     text-align: center;
   }
-
   .stat-num {
     font-size: 3rem;
     font-weight: 700;
@@ -281,21 +319,18 @@
     font-family: var(--font-mono);
     color: var(--accent);
   }
-
   .stat-label {
     font-size: 13px;
     color: var(--text-muted);
-    margin-top: 0.4rem;
-    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
   }
 
-  /* MANIFESTO */
-  .manifesto {
-    max-width: 680px;
-    margin: 6rem auto;
+  /* DIAGNÓSTICO CONTEXTUAL */
+  .context-block {
+    max-width: 720px;
+    margin: 5.5rem auto;
     padding: 0 2rem;
   }
-
   .section-tag {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -304,27 +339,38 @@
     color: var(--text-dim);
     margin-bottom: 2rem;
   }
+  .context-block h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+  }
+  .context-block h2 strong { color: var(--accent); }
+  .context-block p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
 
+  /* MANIFESTO */
+  .manifesto {
+    max-width: 680px;
+    margin: 0 auto 6rem;
+    padding: 0 2rem;
+  }
   .manifesto-line {
-    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-size: clamp(1.3rem, 2.5vw, 1.75rem);
     font-weight: 500;
-    line-height: 1.4;
+    line-height: 1.45;
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--border);
   }
-
   .manifesto-line:last-child { border-bottom: none; }
-
-  .manifesto-line strong {
-    color: var(--accent);
-    font-weight: 700;
-  }
-
-  .manifesto-line .strike {
-    text-decoration: line-through;
-    color: var(--text-dim);
-  }
+  .manifesto-line strong { color: var(--accent); font-weight: 700; }
+  .manifesto-line .strike { text-decoration: line-through; color: var(--text-dim); }
 
   /* PILLARS */
   .pillars {
@@ -332,83 +378,95 @@
     max-width: 1100px;
     margin: 0 auto;
   }
-
   .pillars-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1px;
     background: var(--border);
     border: 1px solid var(--border);
     border-radius: 3px;
     overflow: hidden;
   }
-
   .pillar {
     background: var(--surface);
     padding: 2.5rem 2rem;
     position: relative;
     transition: background 0.2s;
   }
-
   .pillar:hover { background: var(--surface2); }
-
   .pillar-num {
     font-family: var(--font-mono);
     font-size: 11px;
     color: var(--text-dim);
     letter-spacing: 0.1em;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.2rem;
   }
-
   .pillar h3 {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 600;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.7rem;
     letter-spacing: -0.01em;
   }
-
-  .pillar p {
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.65;
-  }
-
+  .pillar p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
   .pillar-accent {
     position: absolute;
     top: 0; left: 0;
-    width: 3px;
-    height: 100%;
+    width: 3px; height: 100%;
     background: var(--accent);
     opacity: 0;
     transition: opacity 0.2s;
   }
-
   .pillar:hover .pillar-accent { opacity: 1; }
 
-  /* SOCIAL PROOF */
-  .proof {
+  /* PARA QUEM É */
+  .for-who {
     padding: 5rem 2.5rem;
     max-width: 800px;
     margin: 0 auto;
+  }
+  .check-list {
+    list-style: none;
+    margin-top: 2rem;
+  }
+  .check-list li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .check-list li:last-child { border-bottom: none; }
+  .check-list li .icon {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .check-list li strong { color: var(--text); }
+
+  /* QUOTE */
+  .proof {
+    padding: 4rem 2.5rem;
+    max-width: 740px;
+    margin: 0 auto;
     text-align: center;
   }
-
   .quote {
-    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
     font-weight: 400;
-    line-height: 1.55;
+    line-height: 1.6;
     color: var(--text-muted);
     font-style: italic;
-    position: relative;
-    padding: 2rem 2rem;
+    padding: 2rem;
     border: 1px solid var(--border);
     border-radius: 3px;
     background: var(--surface);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
-
   .quote strong { color: var(--text); font-style: normal; }
-
   .quote-author {
     font-family: var(--font-mono);
     font-size: 12px;
@@ -423,98 +481,74 @@
     border-top: 1px solid var(--border);
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-
   .final-cta::before {
     content: '';
     position: absolute;
-    bottom: -100px;
-    left: 50%;
+    bottom: -120px; left: 50%;
     transform: translateX(-50%);
-    width: 500px;
-    height: 300px;
+    width: 500px; height: 300px;
     background: radial-gradient(ellipse, rgba(200,255,0,0.05) 0%, transparent 70%);
     pointer-events: none;
   }
-
   .final-cta h2 {
-    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-size: clamp(2rem, 5vw, 3.6rem);
     font-weight: 700;
     line-height: 1.05;
     letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 1rem;
+    max-width: 580px;
   }
-
-  .final-cta p {
+  .final-cta .sub {
     color: var(--text-muted);
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
     font-size: 1rem;
+    max-width: 420px;
   }
 
-  .waitlist-form-bottom {
-    display: flex;
-    gap: 0;
-    max-width: 440px;
+  /* EMAIL GATE (BOTTOM) */
+  .email-gate-bottom {
+    display: none;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    margin: 0 auto;
+    max-width: 460px;
+    margin-top: 0.5rem;
+  }
+  .email-gate-bottom.open { display: flex; }
+  .email-row-b {
+    display: flex;
+    width: 100%;
     border: 1px solid var(--border-strong);
     border-radius: 3px;
     overflow: hidden;
     background: var(--surface);
     transition: border-color 0.2s;
   }
-
-  .waitlist-form-bottom:focus-within {
-    border-color: var(--accent-border);
+  .email-row-b:focus-within { border-color: var(--accent-border); }
+  .email-row-b input {
+    flex: 1; background: transparent; border: none; outline: none;
+    padding: 0.9rem 1.2rem; font-family: var(--font-sans); font-size: 14px; color: var(--text);
   }
-
-  .waitlist-form-bottom input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    padding: 1rem 1.25rem;
-    font-family: var(--font-sans);
-    font-size: 14px;
-    color: var(--text);
+  .email-row-b input::placeholder { color: var(--text-dim); }
+  .email-row-b button {
+    background: var(--accent); color: var(--black); border: none;
+    padding: 0.9rem 1.4rem; font-family: var(--font-mono); font-size: 11px;
+    font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer; white-space: nowrap; transition: opacity 0.2s;
   }
+  .email-row-b button:hover { opacity: 0.85; }
+  .email-row-b button:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  .waitlist-form-bottom input::placeholder { color: var(--text-dim); }
-
-  .waitlist-form-bottom button {
-    background: var(--accent);
-    color: var(--black);
-    border: none;
-    padding: 1rem 1.5rem;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: opacity 0.2s;
+  .diagnosis-box-b {
+    display: none; width: 100%; max-width: 520px; margin-top: 1.5rem;
+    background: var(--surface); border: 1px solid var(--border-strong);
+    border-radius: 3px; overflow: hidden; text-align: left;
   }
-
-  .waitlist-form-bottom button:hover { opacity: 0.85; }
-  .waitlist-form-bottom button:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  .diagnosis-box-bottom {
-    display: none;
-    max-width: 560px;
-    width: 100%;
-    margin: 2rem auto 0;
-    background: var(--surface);
-    border: 1px solid var(--border-strong);
-    border-radius: 3px;
-    overflow: hidden;
-    text-align: left;
-  }
-
-  .diagnosis-box-bottom.visible { display: block; }
+  .diagnosis-box-b.visible { display: block; }
 
   /* FOOTER */
   footer {
@@ -526,55 +560,22 @@
     flex-wrap: wrap;
     gap: 1rem;
   }
-
   footer .logo {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
+    font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent);
   }
+  footer p { font-size: 12px; color: var(--text-dim); font-family: var(--font-mono); }
 
-  footer p {
-    font-size: 12px;
-    color: var(--text-dim);
-    font-family: var(--font-mono);
-  }
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
 
-  /* UTILITIES */
-  .center { display: flex; flex-direction: column; align-items: center; }
-
-  .cta-button{
-  display:block;
-  width:100%;
-  text-align:center;
-  background:var(--accent);
-  color:var(--black);
-  text-decoration:none;
-  padding:1rem 1.5rem;
-  font-family:var(--font-mono);
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  transition:all .2s ease;
-}
-
-.cta-button:hover{
-  opacity:.85;
-}
-
-  /* SCROLL ANIMATIONS */
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: none;
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.25rem; }
+    .email-row, .email-row-b { flex-direction: column; }
+    .email-row button, .email-row-b button { width: 100%; padding: 0.9rem; }
+    .btn-secondary { margin-left: 0; }
+    footer { flex-direction: column; text-align: center; }
   }
 </style>
 </head>
@@ -587,132 +588,186 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero center">
-  <div class="hero-eyebrow">Sistema de Performance</div>
+<section class="hero">
+  <div class="hero-eyebrow">Disciplina · Treino · Constância</div>
 
   <h1>
-    Ou você controla<br>
-    sua mente, ou ela<br>
-    <em>controla você.</em>
+    Você não falta<br>
+    vontade de treinar.<br>
+    <em>Falta <span class="acc">sistema.</span></em>
   </h1>
 
   <p class="hero-sub">
-    Deep Focus System é o framework de disciplina e execução para quem está cansado de planejamento sem resultado.
+    Deep Focus System é o método para quem já começou mil vezes e parou. Para quem treina na força de vontade — e sabe que isso não dura.
   </p>
 
-  <div class="waitlist-form">
-  <a
-    href="https://forms.gle/w4MzNA4ANPfkAYkC6"
-    target="_blank"
-    class="cta-button"
-  >
-    GARANTIR ACESSO ANTECIPADO
-  </a>
-</div>
+  <div class="cta-group">
+    <a href="https://forms.gle/A2mZmnMswEdnmZdGA" target="_blank" class="btn-primary">Quero entrar na lista</a>
+    <button class="btn-secondary" onclick="toggleDiag()">Diagnóstico gratuito IA</button>
+  </div>
+  <p class="form-note">Acesso antecipado · Sem spam · Cancela quando quiser</p>
 
-<p class="form-note">
-  Acesso antecipado para os primeiros membros da Deep Focus.
-</p>
-
-  <div class="diagnosis-box" id="diag-hero">
-    <div class="diagnosis-header">
-      <span class="diagnosis-label">DIAGNÓSTICO IA</span>
-      <span class="diagnosis-status" id="status-hero">Gerando...</span>
+  <div class="email-gate" id="email-gate-hero">
+    <div style="height:1rem"></div>
+    <div class="email-row">
+      <input type="email" id="email-hero" placeholder="seu@email.com" />
+      <button id="btn-hero" onclick="submitDiag()">Analisar</button>
     </div>
-    <div class="diagnosis-content" id="content-hero"></div>
+    <div class="diagnosis-box" id="diag-hero">
+      <div class="diagnosis-header">
+        <span class="diagnosis-label">DIAGNÓSTICO IA</span>
+        <span class="diagnosis-status" id="status-hero">Gerando...</span>
+      </div>
+      <div class="diagnosis-content" id="content-hero"></div>
+    </div>
   </div>
 </section>
+
+<!-- VERDADE CRUA -->
+<div class="truth-strip reveal">
+  <p>
+    A maioria das pessoas não para de treinar por preguiça.<br>
+    Para porque <strong>nunca montou um sistema que funciona sem motivação.</strong>
+  </p>
+</div>
 
 <!-- STATS -->
 <div class="stats reveal">
   <div>
-    <div class="stat-num">87%</div>
-    <div class="stat-label">das metas falham por falta de sistema</div>
+    <div class="stat-num">92%</div>
+    <div class="stat-label">abandonam o treino nos primeiros 3 meses</div>
   </div>
   <div>
-    <div class="stat-num">3min</div>
-    <div class="stat-label">é o tempo médio de foco real por hora</div>
+    <div class="stat-num">11 dias</div>
+    <div class="stat-label">é o tempo médio até a primeira falta "justificada"</div>
   </div>
   <div>
     <div class="stat-num">0</div>
-    <div class="stat-label">motivação necessária quando há protocolo</div>
+    <div class="stat-label">dias de motivação necessários com o protocolo certo</div>
   </div>
 </div>
 
+<!-- CONTEXT BLOCK -->
+<section class="context-block reveal">
+  <p class="section-tag">// o diagnóstico real</p>
+  <h2>Não é falta de treino.<br>É falta de <strong>protocolo.</strong></h2>
+  <p>
+    Você já sabe que precisa treinar. Já teve fases incríveis. Já sentiu o resultado quando foi consistente.
+    O problema é que cada ciclo depende de uma faísca de motivação — e motivação é o recurso mais volátil que existe.
+  </p>
+  <p>
+    Deep Focus System não te motiva. Te dá estrutura para executar quando a motivação foi embora. Funciona para musculação, corrida de rua ou qualquer treino que exige presença semana após semana.
+  </p>
+</section>
+
 <!-- MANIFESTO -->
 <section class="manifesto reveal">
-  <p class="section-tag">// manifesto</p>
-
+  <p class="section-tag">// verdades que ninguém fala</p>
   <div class="manifesto-line">
-    <span class="strike">Motivação</span> é volátil. <strong>Sistema é permanente.</strong>
+    <span class="strike">Motivação</span> dura 3 dias. <strong>Protocolo dura o ano inteiro.</strong>
   </div>
   <div class="manifesto-line">
-    Você não precisa de mais conteúdo. Você precisa de <strong>menos distração</strong> e mais execução.
+    O problema não foi o treino que você escolheu. Foi a <strong>ausência de sistema nos dias ruins.</strong>
   </div>
   <div class="manifesto-line">
-    O problema nunca foi preguiça. Foi a <strong>ausência de estrutura.</strong>
+    Constância não é dom. É consequência de <strong>decisões tomadas com antecedência.</strong>
   </div>
   <div class="manifesto-line">
-    <strong>Deep Focus</strong> não é um estado mental. É um protocolo repetível.
+    Você não precisa de mais plano. Precisa de um <strong>protocolo que funciona no pior dia.</strong>
   </div>
 </section>
 
 <!-- PILLARS -->
 <section class="pillars reveal">
-  <p class="section-tag" style="padding: 0 0 2rem;">// pilares do sistema</p>
+  <p class="section-tag" style="padding: 0 0 2rem;">// os 4 pilares</p>
   <div class="pillars-grid">
     <div class="pillar">
       <div class="pillar-accent"></div>
       <div class="pillar-num">01</div>
-      <h3>Clareza Brutal</h3>
-      <p>Saber exatamente o que importa hoje. Sem lista de 30 tarefas. Uma prioridade, executada.</p>
+      <h3>Protocolo Anti-Falta</h3>
+      <p>Uma decisão que substitui mil micro-decisões. Você não escolhe se vai — você segue o protocolo.</p>
     </div>
     <div class="pillar">
       <div class="pillar-accent"></div>
       <div class="pillar-num">02</div>
-      <h3>Proteção de Atenção</h3>
-      <p>Seu ambiente trabalha contra você. Protocolo de bloqueio de estímulos para contexto profundo real.</p>
+      <h3>Ciclos de 30 dias</h3>
+      <p>Sem metas de 1 ano. Blocos curtos, revisão real, ajuste preciso. Execução agora, não amanhã.</p>
     </div>
     <div class="pillar">
       <div class="pillar-accent"></div>
       <div class="pillar-num">03</div>
-      <h3>Consistência Sistemática</h3>
-      <p>Performance não vem de picos. Vem de repetição disciplinada mesmo quando não há energia.</p>
+      <h3>Gestão de Energia</h3>
+      <p>Treino pesado exige recuperação intencional. Aprenda a escalar intensidade sem quebrar a sequência.</p>
     </div>
     <div class="pillar">
       <div class="pillar-accent"></div>
       <div class="pillar-num">04</div>
-      <h3>Feedback Loop Rápido</h3>
-      <p>Revisão diária de 5 minutos. O que funcionou, o que travou, o que ajusta amanhã.</p>
+      <h3>Revisão Semanal</h3>
+      <p>5 minutos que salvam a semana. O que travou, o que ajusta, o que mantém. Sem autocomiseração.</p>
     </div>
   </div>
+</section>
+
+<!-- PARA QUEM É -->
+<section class="for-who reveal">
+  <p class="section-tag">// para quem é isso</p>
+  <ul class="check-list">
+    <li>
+      <span class="icon">→</span>
+      <span>Treina há meses mas <strong>a constância ainda é o maior problema</strong></span>
+    </li>
+    <li>
+      <span class="icon">→</span>
+      <span>Já teve fases incríveis e <strong>não sabe explicar por que parou</strong></span>
+    </li>
+    <li>
+      <span class="icon">→</span>
+      <span>Trabalha, tem vida, e precisa que o <strong>treino encaixe na rotina real</strong> — não na rotina dos sonhos</span>
+    </li>
+    <li>
+      <span class="icon">→</span>
+      <span>Corre ou treina musculação e quer <strong>parar de depender de motivação</strong> para aparecer</span>
+    </li>
+    <li>
+      <span class="icon">→</span>
+      <span>Está cansado de <strong>recomeçar do zero</strong> a cada ciclo que quebra</span>
+    </li>
+  </ul>
 </section>
 
 <!-- SOCIAL PROOF -->
 <section class="proof reveal">
-  <p class="section-tag" style="text-align:left; margin-bottom: 2rem;">// o que muda</p>
+  <p class="section-tag" style="text-align:left; margin-bottom: 1.5rem;">// quem já usa</p>
   <div class="quote">
-    "Fui de <strong>0 a 90 minutos de foco real por dia</strong> em três semanas. Não mudei minha motivação. Mudei minha estrutura."
+    "Treinei por 8 meses seguidos pela primeira vez na vida. Não fui todos os dias cheio de energia. Fui porque <strong>o protocolo removeu a decisão</strong> de ir ou não."
   </div>
-  <p class="quote-author">— Beta tester #007, fundador de startup</p>
+  <p class="quote-author">— Beta tester · musculação 4x/semana</p>
 </section>
 
 <!-- FINAL CTA -->
-<section class="final-cta center">
-  <h2>Chega de começar<br>na segunda.</h2>
-  <p>Entre na waitlist e receba seu diagnóstico de performance agora.</p>
+<section class="final-cta">
+  <h2>Chega de recomeçar<br>na segunda-feira.</h2>
+  <p class="sub">Garanta seu acesso antecipado e seja avisado no lançamento.</p>
 
-  <div class="waitlist-form-bottom" id="form-bottom">
-    <input type="email" id="email-bottom" placeholder="seu@email.com" />
-    <button id="btn-bottom" onclick="submitWaitlist('bottom')">Garantir vaga</button>
+  <div class="cta-group">
+    <a href="https://forms.gle/A2mZmnMswEdnmZdGA" target="_blank" class="btn-primary">Garantir minha vaga</a>
+    <button class="btn-secondary" onclick="toggleDiagBottom()">Diagnóstico IA</button>
   </div>
+  <p class="form-note" style="margin-top:1rem">Gratuito · Sem compromisso</p>
 
-  <div class="diagnosis-box-bottom diagnosis-box" id="diag-bottom">
-    <div class="diagnosis-header">
-      <span class="diagnosis-label">DIAGNÓSTICO IA</span>
-      <span class="diagnosis-status" id="status-bottom">Gerando...</span>
+  <div class="email-gate-bottom" id="email-gate-bottom">
+    <div style="height:1rem"></div>
+    <div class="email-row-b">
+      <input type="email" id="email-bottom" placeholder="seu@email.com" />
+      <button id="btn-bottom" onclick="submitDiagBottom()">Analisar</button>
     </div>
-    <div class="diagnosis-content" id="content-bottom"></div>
+    <div class="diagnosis-box-b" id="diag-bottom">
+      <div class="diagnosis-header">
+        <span class="diagnosis-label">DIAGNÓSTICO IA</span>
+        <span class="diagnosis-status" id="status-bottom">Gerando...</span>
+      </div>
+      <div class="diagnosis-content" id="content-bottom"></div>
+    </div>
   </div>
 </section>
 
@@ -723,37 +778,71 @@
 </footer>
 
 <script>
-async function submitWaitlist(id) {
-  const emailEl = document.getElementById('email-' + id);
-  const btn = document.getElementById('btn-' + id);
-  const diagBox = document.getElementById('diag-' + id);
-  const statusEl = document.getElementById('status-' + id);
-  const contentEl = document.getElementById('content-' + id);
+// TOGGLE EMAIL GATE
+function toggleDiag() {
+  const gate = document.getElementById('email-gate-hero');
+  gate.classList.toggle('open');
+  if (gate.classList.contains('open')) {
+    setTimeout(() => document.getElementById('email-hero').focus(), 200);
+  }
+}
+
+function toggleDiagBottom() {
+  const gate = document.getElementById('email-gate-bottom');
+  gate.classList.toggle('open');
+  if (gate.classList.contains('open')) {
+    setTimeout(() => document.getElementById('email-bottom').focus(), 200);
+  }
+}
+
+// SUBMIT HERO
+async function submitDiag() {
+  const emailEl = document.getElementById('email-hero');
+  const btn = document.getElementById('btn-hero');
+  const diagBox = document.getElementById('diag-hero');
+  const statusEl = document.getElementById('status-hero');
+  const contentEl = document.getElementById('content-hero');
+  await runDiag(emailEl, btn, diagBox, statusEl, contentEl);
+}
+
+// SUBMIT BOTTOM
+async function submitDiagBottom() {
+  const emailEl = document.getElementById('email-bottom');
+  const btn = document.getElementById('btn-bottom');
+  const diagBox = document.getElementById('diag-bottom');
+  const statusEl = document.getElementById('status-bottom');
+  const contentEl = document.getElementById('content-bottom');
+  await runDiag(emailEl, btn, diagBox, statusEl, contentEl);
+}
+
+async function runDiag(emailEl, btn, diagBox, statusEl, contentEl) {
   const email = emailEl.value.trim();
 
   if (!email || !email.includes('@')) {
-    emailEl.style.color = '#ff3b3b';
+    emailEl.style.outline = '1px solid #ff3b3b';
     emailEl.placeholder = 'insira um email válido';
-    setTimeout(() => { emailEl.style.color = ''; emailEl.placeholder = 'seu@email.com'; }, 2000);
+    setTimeout(() => { emailEl.style.outline = ''; emailEl.placeholder = 'seu@email.com'; }, 2000);
     return;
   }
 
   btn.disabled = true;
   btn.textContent = '...';
-
   diagBox.classList.add('visible');
   statusEl.textContent = 'Gerando...';
   contentEl.innerHTML = '<span class="cursor-blink"></span>';
 
-  const prompt = `Você é o Deep Focus System, um assistente de performance e disciplina. 
-Um novo usuário entrou na waitlist com o email ${email.split('@')[0].replace(/[^a-zA-Z]/g, '') || 'focado'}.
+  const name = email.split('@')[0].replace(/[^a-zA-Z]/g, '') || 'atleta';
 
-Gere um diagnóstico de performance curtíssimo e impactante em português. 
-Formato: 3 linhas diretas. Sem título, sem emoji, sem lista.
-Linha 1: uma verdade dura sobre o maior inimigo da performance (foco, disciplina ou execução).
-Linha 2: o que o sistema vai resolver especificamente.
-Linha 3: uma instrução de ação para AGORA.
-Tom: direto, seco, sem motivação barata. Máximo 60 palavras.`;
+  const prompt = `Você é o Deep Focus System — um sistema de disciplina e constância para treino físico (musculação e corrida de rua).
+
+Um novo atleta chamado ${name} entrou na sua lista de espera.
+
+Escreva um diagnóstico de constância em português. Regras:
+- 3 parágrafos curtos, sem título, sem emoji, sem lista
+- Parágrafo 1: identifique o padrão de quem para de treinar (verdade dura e específica sobre comportamento, não sobre o treino em si)
+- Parágrafo 2: o que muda quando existe um protocolo real — fale sobre musculação ou corrida especificamente
+- Parágrafo 3: uma instrução de ação concreta para hoje, não amanhã
+- Tom: seco, direto, sem motivação vazia, sem clichê. Máximo 80 palavras no total.`;
 
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -767,11 +856,10 @@ Tom: direto, seco, sem motivação barata. Máximo 60 palavras.`;
     });
 
     const data = await res.json();
-    const text = data.content?.[0]?.text || 'Sistema ativado. Prepare-se.';
+    const text = data.content?.[0]?.text || 'Sistema ativado. Seu protocolo começa hoje.';
 
     contentEl.innerHTML = '';
     statusEl.textContent = 'Completo';
-
     await typewriter(contentEl, text);
 
     btn.textContent = 'Na lista ✓';
@@ -779,7 +867,7 @@ Tom: direto, seco, sem motivação barata. Máximo 60 palavras.`;
     btn.style.color = 'var(--accent)';
 
   } catch (e) {
-    contentEl.innerHTML = '<strong>Sistema ativado.</strong> Sua vaga está garantida. Aguarde o acesso.';
+    contentEl.innerHTML = '<strong>Sistema ativado.</strong> Sua vaga está garantida. Em breve você recebe o acesso.';
     statusEl.textContent = 'Completo';
     btn.textContent = 'Na lista ✓';
   }
@@ -789,11 +877,11 @@ async function typewriter(el, text) {
   const lines = text.split('\n').filter(l => l.trim());
   for (let i = 0; i < lines.length; i++) {
     const p = document.createElement('p');
-    p.style.marginBottom = i < lines.length - 1 ? '0.75rem' : '0';
+    p.style.marginBottom = i < lines.length - 1 ? '0.85rem' : '0';
     el.appendChild(p);
     for (const char of lines[i]) {
       p.innerHTML = p.innerHTML.replace('<span class="cursor-blink"></span>', '') + char + '<span class="cursor-blink"></span>';
-      await sleep(18);
+      await sleep(16);
     }
     p.innerHTML = p.innerHTML.replace('<span class="cursor-blink"></span>', '');
   }
@@ -801,11 +889,11 @@ async function typewriter(el, text) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-}, { threshold: 0.15 });
-
+// SCROLL REVEAL
+const observer = new IntersectionObserver(
+  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+  { threshold: 0.12 }
+);
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
